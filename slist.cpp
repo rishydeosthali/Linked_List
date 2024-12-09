@@ -66,36 +66,11 @@ Airport slist::getAirport(int index) {
 }
 
 
-void slist::insert(int index, Airport aVal) {
-
-    if (index == 0) {
-        Node* newNode = new Node(aVal);
-        newNode->next = head;
-        head = newNode;
-        return;
-    }
-
-    Node* current = head;
-    for (int i = 0; current != nullptr && i < index - 1; ++i) {
-        current = current->next;
-    }
-
-
-    Node* newNode = new Node(aVal);
-    newNode->next = current->next;
-    current->next = newNode;
-}
-
 
 void slist::swap(int index1, int index2) {
     if (index1 == index2) return;
-
     Node* node1 = get(index1);
     Node* node2 = get(index2);
-
-
-
-  
     Airport temp = node1->data;
     node1->data = node2->data;
     node2->data = temp;
@@ -108,8 +83,6 @@ bool slist::isEmpty() {
 
 
 void slist::remove(int index) {
-    if (index < 0 || head == nullptr) throw out_of_range("Index out of bounds");
-
     Node* temp;
     if (index == 0) {
         temp = head;
@@ -122,9 +95,6 @@ void slist::remove(int index) {
     for (int i = 0; current != nullptr && i < index - 1; ++i) {
         current = current->next;
     }
-
-
-
     temp = current->next;
     current->next = current->next->next;
     delete temp;
@@ -153,13 +123,27 @@ slist slist::subList(int start, int length) {
     slist sublist;
     Node* current = get(start);
     int count = 0;
-
     while (current != nullptr && count < length) {
         sublist.add(current->data);
         current = current->next;
         count++;
     }
     return sublist;
+}
+void slist::insert(int index, Airport aVal) {
+    if (index == 0) {
+        Node* newNode = new Node(aVal);
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+    Node* current = head;
+    for (int i = 0; current != nullptr && i < index - 1; ++i) {
+        current = current->next;
+    }
+    Node* newNode = new Node(aVal);
+    newNode->next = current->next;
+    current->next = newNode;
 }
 
 string slist::toString() {
