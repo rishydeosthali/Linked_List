@@ -54,16 +54,6 @@ bool slist::equals(slist a) {
 }
 
 
-Node* slist::get(int index) {
-    Node *current = head;
-    int count = 0;
-
-    while (current != nullptr && count < index) {
-        current = current->next;
-        count++;
-    }
-    return (count == index) ? current : nullptr;
-}
 
 
 Airport slist::getAirport(int index) {
@@ -77,7 +67,7 @@ Airport slist::getAirport(int index) {
 
 
 void slist::insert(int index, Airport aVal) {
-    if (index < 0) throw out_of_range("Index cannot be negative");
+
     if (index == 0) {
         Node* newNode = new Node(aVal);
         newNode->next = head;
@@ -90,9 +80,6 @@ void slist::insert(int index, Airport aVal) {
         current = current->next;
     }
 
-    if (current == nullptr) {
-        throw out_of_range("Index is out of bounds");
-    }
 
     Node* newNode = new Node(aVal);
     newNode->next = current->next;
@@ -106,9 +93,7 @@ void slist::swap(int index1, int index2) {
     Node* node1 = get(index1);
     Node* node2 = get(index2);
 
-    if (node1 == nullptr || node2 == nullptr) {
-        throw out_of_range("Index out of bounds");
-    }
+
 
   
     Airport temp = node1->data;
@@ -138,9 +123,7 @@ void slist::remove(int index) {
         current = current->next;
     }
 
-    if (current == nullptr || current->next == nullptr) {
-        throw out_of_range("Index out of bounds");
-    }
+
 
     temp = current->next;
     current->next = current->next->next;
@@ -152,9 +135,7 @@ void slist::set(int index, Airport aVal) {
     Node* node = get(index);
     if (node != nullptr) {
         node->data = aVal;
-    } else {
-        throw out_of_range("Index out of bounds");
-    }
+    } 
 }
 
 
@@ -185,7 +166,7 @@ string slist::toString() {
     string result = "[";
     Node* current = head;
     while (current != nullptr) {
-        result += current->data.toString(); // Assuming `Airport` has a `toString` method
+        result += current->data.toString(); 
         if (current->next != nullptr) {
             result += ", ";
         }
@@ -193,4 +174,14 @@ string slist::toString() {
     }
     result += "]";
     return result;
+}
+Node* slist::get(int index) {
+    Node *current = head;
+    int count = 0;
+
+    while (current != nullptr && count < index) {
+        current = current->next;
+        count++;
+    }
+    return (count == index) ? current : nullptr;
 }
